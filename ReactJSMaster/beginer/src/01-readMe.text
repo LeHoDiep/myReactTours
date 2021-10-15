@@ -1,0 +1,298 @@
+cài nodejs trước
+cài các extenstion bổ trợ cho vs code
+ES7 React/Redux/GraphQL/React-Native snippets
+Prettier Formatter
+EsLint
+vscode-styled-components
+Material Icon Theme
+html-to-jsx
+EditorConfig
+Auto Rename Tag
+Auto Rename Tag
+
+cài extenstion cho chrome
+Redux DevTools: hỗ trợ debug cho Redux
+React Devoloper: hỗ trợ debug cho React
+//tạo folder React mới theo trang
+https://create-react-app.dev/
+npx create-react-app app-name
+
+//nếu bạn mới cái thì terminal sẽ hiển thị npm
+//không phải yarn
+//ở đây mình dùng yarn vì nó mang lại tốc độ tải cao
+//và mình xài chung đồ với fb
+//cài yarn : npm i --global yarn
+//sau đó gõ cd ./beginer để truy cập vào beginer
+//gõ yarn start để chạy project
+//ta sẽ thấy nó tương đồng với webpack đã biết ở js
+//vì sâu bên trong react app nó chạy webpack
+
+//sơ lược về cấu trúc trong thư mục react
+//Package Json
+        scripts : các câu lệnh được viết sẵn để sử dụng 
+        eslintConfig: giúp mình thao tác eslint 
+        browserslist: biên dịch để tương thích trên các trình duyệt
+//Package-lock.json(yarn.lock)
+        file này hỗ trợ cài đặt cho Package.json
+//README
+        là 1 file hướng dẫn sử dụng mà thôi
+//.gitignore
+        chứa những thông tin mà mình k muốn up lên git
+//folder public. khi chạy yarn start thì mới có
+        giống như xài gulp watch sản sinh ra folder dist
+//trong public  chỉ có 1 file html 
+        đặc biệt là k có thẻ scripts nào cả vì react  sẽ tự chèn
+//vì mình code app
+//src là thư mục code chính trong project
+//  index.js
+        đây là nơi chưa tổng thể cần import 
+        nhiệm vụ của nó là đưa tất cả code vào file html
+// còn app.js app.css ta gọi nó là components của React
+        app.test.js là file phục vụ cho việc test thử app.js
+
+
+
+
+
+/********************************************/
+//setup Prettier và EsLint cho project react
+    #1. cài đặt prettier là Formatter mặc định cho VSCODE và Format on save
+        chọn setting ở vscode
+        chọn user => Format chọn prettier và check Format on save
+    #2. tạo file .editorconfig trong thư mục beginer
+        .editorconfig giúp đồng bộ 2 trình biên soạn
+         vd: người a dùng trình biên soạn nào đó có 1tab = 4space
+                   b dùng trình biên soạn nào đó có 1tab = 3space
+             .editorconfig giúp đồng bộ lại việc này
+        .editorconfig chỉ chạy khi đã cài editorconfig VSCODE
+    #3. tạo file .prettierrc để config prettier,giúp đảm bảo đem project
+        này qua các máy khác nhau vẫn giữ đc config
+        "arrowParens": "avoid",
+        "semi": false,
+        "trailingComma": "none",
+        "endOfLine": "lf",
+        "tabWidth": 2,
+        "useTabs": false,
+        "singleQuote": true,
+        "printWidth": 120,
+        "jsxSingleQuote": false
+
+    #4. cài các devDependencies hỗ trợ prettier và eslint
+        yarn add prettier eslint-plugin-prettier eslint-config-prettier -d 
+                
+    #5. tạo file .eslintrc
+        
+    #6. config scripts của Package.json
+    "lint": "eslint --ext js,jsx src/",
+    "lint:fix": "eslint --fix --ext js,jsx src/",
+    "prettier": "prettier --check \"src/**/(**.jsx|*.js|*.scss|*.css)\"",
+    "prettier:fix": "prettier --write \"src/**/(**.jsx|*.js|*.scss|*.css)\""
+
+        ta có thể tạo .prettierignore hay eslintignore để k cho nó tác động
+        những file hay folder mình k thích
+        chạy yarn lint để check lỗi và lint:fix nếu cần
+
+
+
+
+/Deploy********************************************/
+    Deploy với Vercel và Netlify
+
+
+
+
+
+/VISUAL DOM********************************************/
+DOM là gì thì ai cũng biết
+hiện tại có rất nhiều trang DOM của nó có thể lên đến hàng ngàng Node rất khó để xử lý
+và rất khó để móc nối
+giả pháp là     visual DOM điển hình 2 thằng đang dùng là react và vue
+                incremetal DOM điển hình là Angular
+                hay thao tác với dom thật bằng Svetie
+
+
+
+
+
+VISUAL DOM : là DOM ảo
+//      là DOM sẽ không xuất hiện task element của impact
+//      VISUAL DOM sẽ là 1 object thể hiện ra DOM , và DOM này sẽ không được hiển thị
+// chỉ xuất hiện trên Element khi mà
+//      ta cập nhật 1 số trạng thái của app
+//      bằng các thuật toán như diffing và change detection sẽ tìm ra sự thay đổi
+//      giữa các vdom cũ và mới và nó cập nhật lên trên dom thật
+//      như vậy thì k cần quản lý dom thật chỉ cần quản lý trên vdom(dom ảo mà thôi)
+
+
+
+
+//JSX 
+vdom biễu diễn dom ảo dưới dạng object
+nếu trang web lớn thì object này rất to nên ta dùng jsx
+và babel sẽ compile thành React.createElement({
+        'h1',
+        {className = 'bla bla'},
+        'hello world'
+})
+
+
+
+
+
+//ReactDOM.render()
+trong src/index.js
+ta sẽ thấy đoạn code này
+ReactDOM.render(
+  <React.StrictMode>
+    <App />
+  </React.StrictMode>,
+  document.getElementById('root')
+)
+đây chính là method chỉ chạy 1 lần duy nhất
+và thường chỉ đc implement 1 lần mà thôi
+nhiệm vụ của nó là đem các react element lên dom thật
+cụ thể là lên tag có id là root của dom thật
+ReactDOM.render này sẽ control các container truyền vào
+nếu có bất kỳ sự thay đổi nào trong container
+nó sẽ dùng thuật toàn diffing để so sánh
+và cập nhật những element cần thiết vào dom
+ví dụ cho điều này
+//mình sẽ qua app.js fix lại
+//thêm state và thêm 1 nút để tăng state
+//ta sẽ nhìn ra chỉ có mình thẻ p là chớp màu thay đổi
+//tức là ứng dụng đã nhận diện đúng thằng nào đang thay đổi
+
+
+
+
+
+//14. Sự khác nhau giữa Class component và Functional component trong React
+//Class component và Functional component mục đích chung là tạo ra react element
+//dùng class để tạo hay dùng constructor Functional là như nhau
+//Functional component
+giờ ta sẽ tạo thử 1 components có tên là Header
+trong react components quy tắc sẽ viết hoa như Class
+nếu file Header.js thì import cần ./Header.js
+nếu file Header.jsx thì import chỉ cần ./Header
+nhưng hiện tại thì thấy mặc định nó là .js nếu k có . thì nó hiểu là .js
+file jsx thì phải .jsx
+
+//Class component
+ta sẽ tạo 1 Class component có tên là Footer
+lưu ý rằng với Class component thì nên dùng .js
+Footer.js
+
+
+
+
+//15. Mọi thứ về Life cycle trong React Class
+hình LifeCycle.png 
+LifeCycle có 3 giai đoạn chính là Mounting | Updating | Unmounting
+Mounting : giai đoạn component chúng ta khởi tạo cập nhật
+         các element react lên trên dom 
+                đầu tiên là chạy contructor tạo react element
+                            class component chạy contructor đối còn 
+                            Functional component là constructor sẵn r
+                sau đó chạy method render để cập nhật element lên DOM
+                cuối cùng là chạy componentDidMount
+Updating : là khi mà ta có sự thay đổi về pro | setState | forceUpdate()
+                thì nó sẽ lại chạy method render để cập nhật element lên DOM
+                cuối cùng là chạy componentDidUpdate
+Unmounting: là giai đoạn mà component của chúng ta k còn dùng nữa, nghĩa là bỏ đi
+                vứt bỏ k xài tới
+                thì nó sẽ chạy componentWillUnmount 
+
+
+
+//16. Tìm hiểu về state và setState trong React
+//bật vào file Footer compoment để demo
+//state là 1 object chứa dữ liệu trong component của chúng ta
+//--
+//chốt: nên dùng arrow function và dùng currying để truyền parameter
+
+
+
+//17. Tìm hiểu về Prop và PropTypes trong React
+Prop là những thông số được truyền vào React component
+truyền từ component cha vào component con
+-ta truyền thông qua các attribute của html
+//vd: vào app html truyền cho Footer 1 attribute là name="Điệp đẹp trai"
+//ta chỉ dùng props khi con muốn render dữ liệu của cha mà thôi
+//chứ không muốn quản lý
+//===>props là readOnly thôi
+//"không thay đổi giá trị
+//----khi truyền props vào component , thì component nhận k check đc kiểu dữ liệu của props 
+//truyền vào làm khó xử lý
+//nếu code bằng ts thì điều đó dễ dàng
+//nhưng giờ chỉ dùng js thì ta có PropTypes (cần cài)
+//yarn add prop-types
+//cài xong thì sử dụng nó cho Footer xem
+
+//17.5. Bonus thêm về những cách sử dụng props phổ biến trong React
+//      file z17zdemoProp.js
+
+//18. Những cách render element trong React
+//demo bằng component Product.js
+//import Produc.js vào App
+
+//19. Tìm hiểu về constructor trong class component React
+//constructor nằm trong giai đoạn Mounting
+//và nó chỉ chạy 1 lần trong suốt quả trình tồn tại của conpoment
+//ngay khi component đc chạy thì nó chạy
+//nên nó sẽ k query id hay class đc vì chưa có
+
+//20. Tìm hiểu về componentDidMount trong React
+//componentDidMount cũng đc 1 lần duy nhất
+//nó chạy sau khi ra update lên DOM
+//nên trong componentDidMount(){} method mình có thể query dom thật
+//demo trong Product 
+
+21. Tìm hiểu về componentWillUnmount trong React
+//demo 21 trên app
+//ta sẽ thấy dù đã change state và xóa đi thằng demoComponentWillUnmount rồi,
+//nhưng sự kiện lắng nghe trên componentDidMount vẫn còn tác động lên body
+//vậy làm sao để fix
+//ta dùng componentWillUnmount để remove sự kiện/ clearInterval trước khi xóa component
+//giống như dọn dẹp trước khi xóa
+
+//22. Tìm hiểu về componentDidUpdate trong React
+//khi có sự thay đổi của prop state hay cần update
+//thì nó sẽ chạy render lại , cập nhật lại Dom và chạy componentDidUpdate
+//componentDidUpdate thì k nên có lệnh setState vì khi setState thì nó sẽ chạy componentDidUpdate
+//tạo thành vòng lập vô tận
+
+//23. React Hook : giúp quản lý LifeCycle trong functional component
+là tính năng mới của React thêm vào sau bản 16.8
+        phiên bản cũ: khi muốn quản lý các state hay các LifeCycle trong functional component là bất khả thi
+Hook: là các function đc đưa vào functional compoment , vd: useState là 1 hook
+        hook chỉ dùng trong functional compoment thôi
+//Xu hướng code là hook k phải class compoment
+//nhưng React k hề có kế hoạch loại bỏ Class compoment
+//Hook sẽ không thay thế các kiến thức cũ
+
+25. Mọi thứ bạn cần biết về useEffect trong React
+useEffect là 1 hook để thay thế cho các LifeCycle bên class compoment
+useEffect nhận vào 2 tham số: effect function và deps array (dependency)
+//sẽ có 3 trường hợp: không truyền deps , deps là [] , deps có item [a,b,..]
+//không truyền deps     : thì thay thế compomentDidUpdate
+//dep truyền []         : thì thay thế componentDidMount
+//deps có item [a,b,..] : thì chỉ checking thay đổi của  a,b. 
+//                              a,b thay đổi thì mới chạy effect function 
+//effect function sẽ chạy sau khi render
+//clearnup function sẽ chạy khi mà component unmount và sẽ chạy trước khi effect function đc gọi lại
+//demo ở 24
+
+26. Lỗi mutate state, props phổ biến trong React
+
+28. Higher Order Component (HOC) trong React
+HOC là kỹ thuật nâng cao của React nhằm dùng lại logic của component
+HOC là 1 function nhận vào 1 component và return 1 component mới
+thường dùng trong các thư viện phe thứ 3 như Redux
+
+
+29. Mọi thứ bạn cần biết về React.memo
+React.memo giúp mình tránh việc render không cần thiết
+//khi component cha re-render thì component con re-render, nhưng mình có thể
+//không cần render thằng con
+React.memo mặc định dùng render comparison cho props
+//bạn phải đánh đổi giữa việc tăng hiệu suất hay tốn bộ nhớ
